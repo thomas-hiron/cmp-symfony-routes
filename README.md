@@ -1,9 +1,9 @@
 # cmp-symfony-routes
 
 [nvim-cmp](https://github.com/hrsh7th/nvim-cmp) source for symfony routes.  
-The source is using file `./var/cache/dev/url_generating_routes.php`.
+The source is using `./var/cache/dev/url_generating_routes.php` file.
 
-This is plugin in a very simple implementation, the autocomplete won't work
+This plugin is a very simple implementation, the autocomplete won't work
 if the above file doesn't exist.
 
 ![Autocomplete](./docs/autocomplete.png)
