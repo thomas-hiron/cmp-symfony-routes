@@ -35,7 +35,7 @@ end
 
 function source.complete(self, request, callback)
   local line = vim.fn.getline('.')
-  local triggers = { "route", "path", "url" }
+  local triggers = { 'route', 'path', 'url' }
   local found = false
 
   -- Trigger only if route, path or url is present on the line.
