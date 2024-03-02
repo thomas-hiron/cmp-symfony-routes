@@ -5,12 +5,15 @@ local routes = vim.fn.expand('./var/cache/dev/url_generating_routes.php')
 -- Create existing routes from ./var/cache/dev/url_generating_routes.php
 local symfony_routes = {}
 local existing_routes = {}
-for k, route in pairs(vim.fn.readfile(routes)) do
-  local match = route:match("^ +'([a-z_]+).+")
 
-  if match and not existing_routes[match] then
-    table.insert(symfony_routes, match)
-    existing_routes[match] = true
+if vim.fn.filereadable(routes) == 1 then
+  for k, route in pairs(vim.fn.readfile(routes)) do
+    local match = route:match("^ +'([a-z_]+).+")
+
+    if match and not existing_routes[match] then
+      table.insert(symfony_routes, match)
+      existing_routes[match] = true
+    end
   end
 end
 
@@ -26,7 +29,7 @@ end
 function source.is_available()
   local filetypes = { 'php', 'twig' }
 
-  return vim.tbl_contains(filetypes, vim.bo.filetype)
+  return next(existing_routes) ~= nil and vim.tbl_contains(filetypes, vim.bo.filetype)
 end
 
 function source.get_trigger_characters()
@@ -47,7 +50,7 @@ function source.complete(self, request, callback)
   end
 
   if not found then
-    callback({})
+    callback({isIncomplete = true})
 
     return
   end
@@ -60,7 +63,10 @@ function source.complete(self, request, callback)
     })
   end
 
-  callback(items)
+  callback {
+    items = items,
+    isIncomplete = true,
+  }
 end
 
 return source
