@@ -1,21 +1,31 @@
 local source = {}
 
-local routes = vim.fn.expand('./var/cache/dev/url_generating_routes.php')
-
--- Create existing routes from ./var/cache/dev/url_generating_routes.php
 local symfony_routes = {}
 local existing_routes = {}
 
-if vim.fn.filereadable(routes) == 1 then
-  for k, route in pairs(vim.fn.readfile(routes)) do
-    local match = route:match("^ +'([a-z_]+).+")
+-- Create existing routes from ./var/cache/dev/url_generating_routes.php
+local function load_routes()
+  local routes = vim.fn.expand('./var/cache/dev/url_generating_routes.php')
 
-    if match and not existing_routes[match] then
-      table.insert(symfony_routes, match)
-      existing_routes[match] = true
+  if vim.fn.filereadable(routes) == 1 then
+    existing_routes = {}
+    symfony_routes = {}
+
+    for k, route in pairs(vim.fn.readfile(routes)) do
+      local match = route:match("^ +'([a-z_]+).+")
+
+      if match and not existing_routes[match] then
+        table.insert(symfony_routes, match)
+        existing_routes[match] = true
+      end
     end
   end
+
+  -- Reload routes in 30 seconds
+  vim.defer_fn(load_routes, 30000)
 end
+
+load_routes()
 
 function source.new()
   local self = setmetatable({}, { __index = source })

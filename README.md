@@ -8,6 +8,8 @@ if the above file doesn't exist.
 
 ![Autocomplete](./docs/autocomplete.png)
 
+Routes are refreshed every 30 seconds.
+
 ## Setup
 
 ```lua
@@ -37,6 +39,5 @@ There is no configuration at the moment.
 
 ## Todo
 
-- Refresh routes every 10 seconds
 - Configure filetypes
 - Configure input file
