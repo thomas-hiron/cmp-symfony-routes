@@ -1,5 +1,11 @@
 # cmp-symfony-routes
 
+### ⚠️  This repo has been moved ⚠️
+
+This code has been merged to https://github.com/thomas-hiron/cmp-symfony.
+
+---
+
 [nvim-cmp](https://github.com/hrsh7th/nvim-cmp) source for symfony routes.  
 The source is using `./var/cache/dev/url_generating_routes.php` file.
 
